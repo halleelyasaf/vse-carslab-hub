@@ -1,0 +1,51 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+generators:
+# Uncomment for SiteConfig CR creation
+- siteconfig.yaml
+
+resources:
+ - pullsecret-sealed.yaml
+ - 5g-core-cluster-bmc-creds-secret2.yaml
+ - 5g-core-cluster-bmc-creds-secret3.yaml
+ - 5g-core-cluster-bmc-creds-secret4.yaml
+ - 5g-core-cluster-bmc-creds-secret5.yaml
+ - 5g-core-cluster-bmc-creds-secret.yaml
+patches:
+#  - target:
+#     kind: Secret
+#    patch: |-
+#      - op: replace
+#        path: /metadata/name
+#        value: '5g-core-cluster-bmc-creds-secret'
+#      - op: replace
+#        path: /metadata/namespace
+#        value: '5g-core-cluster'
+#      - op: replace
+#        path: /data/username
+#        value: 'YWRtaW4='
+#      - op: replace
+#        path: /data/password
+#        value: 'cmVkaGF0MTIz'
+ - target:
+    kind: SealedSecret
+   patch: |-
+     - op: replace
+       path: /metadata/name
+       value: 'assisted-deployment-pull-secret'
+     - op: replace
+       path: /metadata/namespace
+       value: '5g-core-cluster'
+     - op: replace
+       path: /spec/encryptedData/.dockerconfigjson
+       value: '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'
+     - op: replace
+       path: /spec/encryptedData/type
+     - op: replace
+       path: /spec/template/metadata/name
+       value: '5g-core-cluster-bmc-creds-secret'
+     - op: replace
+       path: /spec/template/metadata/namespace
+       value: '5g-core-cluster'

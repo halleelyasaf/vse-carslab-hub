@@ -1,0 +1,212 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: SiteConfig
+metadata:
+  name: "5g-core-cluster"
+  namespace: "5g-core-cluster"
+spec:
+  baseDomain: "npss.jnpr.bos2.lab"
+  pullSecretRef:
+    name: "assisted-deployment-pull-secret"
+  clusterImageSetNameRef: "img4.11.18-x86-64-appsub"
+# yamllint disable-line rule:line-length
+  sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCkw67DF5643GScPYeyacco4utV9Dx7FX1XtsrB5iGsUNOdaRg/gxsWf2bVEbpWCTXGTwYqeYlHTbAybedRyqV7CdJWQKJPHUbi+ged1MSRfehD38qFozXKz4u9YAwDAKVf9QClujn2QKxjS38qZbCGFKJeckC8wME2OdOaGv6+pTu3a7kQBWuvQKpyVvY8PTM5RPMLP7bnx0OJ6Dxfzx6LUCj55yp6FN2O9bSOjpn7XJchKoTwch35pmNkJn2oD4cTbD6nv7qUVWa1rd5ATqZwrn/MuZZEdyj0biKXQMnh3Bhr+i8uXoJ/VD19vw2CYDtSLTpgKKjJKeqDOYdTzR8mJZ18XF5czxWB8UaTnh5mDbiXYiqMJ86pbkckbsCkICwSDfTpyB9pxxn/3yF6OH/hAY0j/9VtUz+XzbUPkg6fPu81AQdvKYL/Hl+JBcDl3ZKMI6KQrkm+AeVy90WSAoM0DbMAkhb1q4u+g0tXOnSch7+jbRl81d3Dme0GtYIBfVMaH+cnfvNSVLeBraCl0Y9BibzloCWVnKzu2qFFXFTj+CeJ2VHuC6gcF0hNoEdhFjeghJ3zElgGiOhz2yf4x++2+uBRrtRjqRDn4CAVLq8b6+YucVcltScdYctNTSxXMFzeminDIGNl6829gYHQeE/sehj6dtLAK8sSNnimyqLpNQ=="
+  clusters:
+    - clusterName: "5g-core-cluster"
+      clusterLabels:
+        group-vdu: ""
+        common-49: true
+        sites: "r740xls"
+      networkType: "OVNKubernetes"
+      clusterNetwork:
+        - cidr: "10.128.0.0/14"
+          hostPrefix: 23
+      serviceNetwork:
+        - "172.30.0.0/16"
+      apiVIP: 192.168.35.51
+      ingressVIP: 192.168.35.52
+      additionalNTPSources:
+        - 192.168.35.30
+      nodes:
+       - hostName: "super1.5g-core-cluster.npss.jnpr.bos2.lab"
+         role: "master"
+         bmcAddress: redfish-virtualmedia://192.168.35.157/redfish/v1/Systems/1/
+         bmcCredentialsName:
+           name: "5g-core-cluster-bmc-creds-secret"
+         bootMACAddress: "B4:96:91:B7:2E:68"
+         bootMode: "UEFI"
+         cpuset: "0-3,48-51"
+         nodeNetwork:
+           config:
+             interfaces:
+               - name: ens10f0
+                 type: ethernet
+                 state: up
+                 ipv4:
+                   enabled: true
+                   address:
+                     - ip: 192.168.35.53
+                       prefix-length: 25
+                 ipv6:
+                   enabled: false
+             dns-resolver:
+               config:
+                 search:
+                   - npss.jnpr.bos2.lab
+                 server:
+                   - 192.168.35.30
+             routes:
+               config:
+                 - destination: 0.0.0.0/0
+                   next-hop-interface: ens10f0
+                   next-hop-address: 192.168.35.1
+                   table-id: 254
+           interfaces:
+             - name: "ens10f0"
+               macAddress: B4:96:91:B7:2E:68
+       - hostName: "super2.5g-core-cluster.npss.jnpr.bos2.lab"
+         role: "master"
+         bmcAddress: redfish-virtualmedia://192.168.35.158/redfish/v1/Systems/1/
+         bmcCredentialsName:
+           name: "5g-core-cluster-bmc-creds-secret2"
+         bootMACAddress: "B4:96:91:B7:2D:18"
+         bootMode: "UEFI"
+         cpuset: "0-3,48-51"
+         nodeNetwork:
+           config:
+             interfaces:
+               - name: ens10f0
+                 type: ethernet
+                 state: up
+                 ipv4:
+                   enabled: true
+                   address:
+                     - ip: 192.168.35.54
+                       prefix-length: 25
+                 ipv6:
+                   enabled: false
+             dns-resolver:
+               config:
+                 search:
+                   - npss.jnpr.bos2.lab
+                 server:
+                   - 192.168.35.30
+             routes:
+               config:
+                 - destination: 0.0.0.0/0
+                   next-hop-interface: ens10f0
+                   next-hop-address: 192.168.35.1
+                   table-id: 254
+           interfaces:
+             - name: "ens10f0"
+               macAddress: B4:96:91:B7:2D:18
+       - hostName: "super3.5g-core-cluster.npss.jnpr.bos2.lab"
+         role: "master"
+         bmcAddress: redfish-virtualmedia://192.168.35.159/redfish/v1/Systems/1/
+         bmcCredentialsName:
+           name: "5g-core-cluster-bmc-creds-secret3"
+         bootMACAddress: "B4:96:91:B7:2E:5C"
+         bootMode: "UEFI"
+         cpuset: "0-3,48-51"
+         nodeNetwork:
+           config:
+             interfaces:
+               - name: ens10f0
+                 type: ethernet
+                 state: up
+                 ipv4:
+                   enabled: true
+                   address:
+                     - ip: 192.168.35.55
+                       prefix-length: 25
+                 ipv6:
+                   enabled: false
+             dns-resolver:
+               config:
+                 search:
+                   - npss.jnpr.bos2.lab
+                 server:
+                   - 192.168.35.30
+             routes:
+               config:
+                 - destination: 0.0.0.0/0
+                   next-hop-interface: ens10f0
+                   next-hop-address: 192.168.35.1
+                   table-id: 254
+           interfaces:
+             - name: "ens10f0"
+               macAddress: B4:96:91:B7:2E:5C
+       - hostName: "worker1.5g-core-cluster.npss.jnpr.bos2.lab"
+         role: "worker"
+         bmcAddress: redfish-virtualmedia://192.168.35.160/redfish/v1/Systems/1/
+         bmcCredentialsName:
+           name: "5g-core-cluster-bmc-creds-secret4"
+         bootMACAddress: "B4:96:91:BE:36:94"
+         bootMode: "UEFI"
+         cpuset: "0-3,48-51"
+         nodeNetwork:
+           config:
+             interfaces:
+               - name: ens10f0
+                 type: ethernet
+                 state: up
+                 ipv4:
+                   enabled: true
+                   address:
+                     - ip: 192.168.35.56
+                       prefix-length: 25
+                 ipv6:
+                   enabled: false
+             dns-resolver:
+               config:
+                 search:
+                   - npss.jnpr.bos2.lab
+                 server:
+                   - 192.168.35.30
+             routes:
+               config:
+                 - destination: 0.0.0.0/0
+                   next-hop-interface: ens10f0
+                   next-hop-address: 192.168.35.1
+                   table-id: 254
+           interfaces:
+             - name: "ens10f0"
+               macAddress: B4:96:91:BE:36:94
+       - hostName: "worker2.5g-core-cluster.npss.jnpr.bos2.lab"
+         role: "worker"
+         bmcAddress: redfish-virtualmedia://192.168.35.161/redfish/v1/Systems/1/
+         bmcCredentialsName:
+           name: "5g-core-cluster-bmc-creds-secret5"
+         bootMACAddress: "B4:96:91:BE:35:A8"
+         bootMode: "UEFI"
+         cpuset: "0-3,48-51"
+         nodeNetwork:
+           config:
+             interfaces:
+               - name: ens10f0
+                 type: ethernet
+                 state: up
+                 ipv4:
+                   enabled: true
+                   address:
+                     - ip: 192.168.35.57
+                       prefix-length: 25
+                 ipv6:
+                   enabled: false
+             dns-resolver:
+               config:
+                 search:
+                   - npss.jnpr.bos2.lab
+                 server:
+                   - 192.168.35.30
+             routes:
+               config:
+                 - destination: 0.0.0.0/0
+                   next-hop-interface: ens10f0
+                   next-hop-address: 192.168.35.1
+                   table-id: 254
+           interfaces:
+             - name: "ens10f0"
+               macAddress: B4:96:91:BE:35:A8
+  
+
