@@ -12,8 +12,8 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://github.com/redhat-partner-solutions/vse-carslab-hub.git
-        revision: main
+        repoURL: https://github.com/halleelyasaf/vse-carslab-hub.git
+        revision: druid
         directories:
           - path: clusters/ztp-siteconfig/*
   template:
@@ -35,8 +35,8 @@ spec:
           - CreateNamespace=true
       source:
         path: '{{path}}'
-        repoURL: https://github.com/redhat-partner-solutions/vse-carslab-hub.git
-        targetRevision: main
+        repoURL: https://github.com/halleelyasaf/vse-carslab-hub.git
+        targetRevision: druid
       destination:
         server: https://kubernetes.default.svc
         namespace: clusters-sub
