@@ -28,4 +28,4 @@ generators:
  - site-specific-policies/skidoo-site-specific.yaml
 #- example-multinode-site.yaml
 # These are cluster specific policies:
- - cluster-specific-policies/skidoo-cluster-specific.yaml
+# - cluster-specific-policies/skidoo-cluster-specific.yaml
