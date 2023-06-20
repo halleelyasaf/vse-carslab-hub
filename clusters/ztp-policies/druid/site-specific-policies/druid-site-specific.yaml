@@ -2,11 +2,11 @@
 apiVersion: ran.openshift.io/v1
 kind: PolicyGenTemplate
 metadata:
-  name: "skidoo-site-specific"
+  name: "druid-site-specific"
   namespace: "ztp-site"
 spec:
   bindingRules:
-    sites: "skidoo"
+    sites: "druid"
   remediationAction: inform
   mcp: "master"
   sourceFiles:
