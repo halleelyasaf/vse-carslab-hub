@@ -25,7 +25,7 @@ generators:
 #- group-du-standard-validator-ranGen.yaml
 # yamllint disable-line rule:line-length
 # These are examples that should be replicated for every individual site:
- - site-specific-policies/skidoo-site-specific.yaml
+ - site-specific-policies/druid-site-specific.yaml
 #- example-multinode-site.yaml
 # These are cluster specific policies:
-# - cluster-specific-policies/skidoo-cluster-specific.yaml
+# - cluster-specific-policies/druid-cluster-specific.yaml
