@@ -15,7 +15,7 @@ spec:
     - clusterName: "5g-core-cluster"
       clusterLabels:
         common: true
-        group-vdu: ""
+#        group-vdu: ""
         sites: "r740xls"
       networkType: "OVNKubernetes"
       clusterNetwork:
