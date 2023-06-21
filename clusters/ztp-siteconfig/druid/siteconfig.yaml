@@ -10,12 +10,12 @@ spec:
     name: "assisted-deployment-pull-secret"
   clusterImageSetNameRef: "img4.11.18-x86-64-appsub"
 # yamllint disable-line rule:line-length
-  sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCkw67DF5643GScPYeyacco4utV9Dx7FX1XtsrB5iGsUNOdaRg/gxsWf2bVEbpWCTXGTwYqeYlHTbAybedRyqV7CdJWQKJPHUbi+ged1MSRfehD38qFozXKz4u9YAwDAKVf9QClujn2QKxjS38qZbCGFKJeckC8wME2OdOaGv6+pTu3a7kQBWuvQKpyVvY8PTM5RPMLP7bnx0OJ6Dxfzx6LUCj55yp6FN2O9bSOjpn7XJchKoTwch35pmNkJn2oD4cTbD6nv7qUVWa1rd5ATqZwrn/MuZZEdyj0biKXQMnh3Bhr+i8uXoJ/VD19vw2CYDtSLTpgKKjJKeqDOYdTzR8mJZ18XF5czxWB8UaTnh5mDbiXYiqMJ86pbkckbsCkICwSDfTpyB9pxxn/3yF6OH/hAY0j/9VtUz+XzbUPkg6fPu81AQdvKYL/Hl+JBcDl3ZKMI6KQrkm+AeVy90WSAoM0DbMAkhb1q4u+g0tXOnSch7+jbRl81d3Dme0GtYIBfVMaH+cnfvNSVLeBraCl0Y9BibzloCWVnKzu2qFFXFTj+CeJ2VHuC6gcF0hNoEdhFjeghJ3zElgGiOhz2yf4x++2+uBRrtRjqRDn4CAVLq8b6+YucVcltScdYctNTSxXMFzeminDIGNl6829gYHQeE/sehj6dtLAK8sSNnimyqLpNQ=="
+  sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDGoK2hF1qev636csOxgZsQpE9vsOvu/c6Ad3tXMXKqpPgIdfN2Lc2p77JkDVXRnEUSoj94Ep5iTy3JdvYv1TtnYpzu1jbXurKIfYSMP8yqn4NOetltsCgN5HNKqMVJdtik32vXyy1QjGXQoZJSn9RxOiU8A9doegV09ul8tAFQ+lHGOr9Odp1U2zB8wggYt1OJUjxK2exgi7BDR7nUE6Y/iVfmUudxCupG6SbtMOC7y5jYK4dhM9UQ4B5cv4CqAM5Lyo4uW+AnfFzLTlJ/jRd2NXBbeT1BmIdKPMzRGTgulhjh9W6a8T3PuLE2ufgOdLBh4ajMnftvPx8uzjKQOW7y+qmPeHayTR32oWufiQDktvY1ILGT9VVYoKVr8t57qDPNiCQCB257nYmJBWvIhE9wtT7X2ErGr6R6Pq/F0vOGVASrPnr/yhg+WRd6gZYgUpXTYr+PWyPQ6D28TJelITZSsNxLkMI4SYjpJe5c67yz/VbNpqPAtcr06czcZ73+xPM="
   clusters:
     - clusterName: "5g-core-cluster"
       clusterLabels:
+        common: true
         group-vdu: ""
-        common-49: true
         sites: "r740xls"
       networkType: "OVNKubernetes"
       clusterNetwork:
