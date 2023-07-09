@@ -2,11 +2,11 @@
 apiVersion: ran.openshift.io/v1
 kind: PolicyGenTemplate
 metadata:
-  name: "druid-5gcore"
-  namespace: "ztp-druid-5gcore-policies"
+  name: "druid-site-specific"
+  namespace: "ztp-site"
 spec:
   bindingRules:
-    name: "druid-5gcore"
+    name: "druid"
   mcp: "master"
   remediationAction: enforce
   sourceFiles:
