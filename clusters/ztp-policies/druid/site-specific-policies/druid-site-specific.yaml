@@ -6,7 +6,7 @@ metadata:
   namespace: "ztp-site"
 spec:
   bindingRules:
-    name: "druid"
+    druid: true
   mcp: "worker1"
   remediationAction: enforce
   sourceFiles:
