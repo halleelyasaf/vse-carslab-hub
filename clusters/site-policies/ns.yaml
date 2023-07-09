@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-ap-du-01-policies
+  labels:
+    name: ztp-ap-du-01-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-ap-du-02-policies
+  labels:
+    name: ztp-ap-du-02-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-druid-5gcore-policies
+  labels:
+    name: ztp-druid-5gcore-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-common-policies
+  labels:
+    name: ztp-common-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-group-du-policies
+  labels:
+    name: ztp-group-du-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-group-5gcore-policies
+  labels:
+    name: ztp-group-5gcore-policies
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztp-site-policies
+  labels:
+    name: ztp-site-policies
+
+

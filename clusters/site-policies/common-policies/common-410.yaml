@@ -1,0 +1,87 @@
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "common-410"
+  namespace: "ztp-common-policies"
+spec:
+  bindingRules:
+    common: "4.10"
+  remediationAction: enforce
+  sourceFiles:
+    - fileName: OperatorHub.yaml
+      policyName: "disconnected-olm"
+
+    - fileName: DefaultCatsrc.yaml
+      policyName: "disconnected-olm"
+      metadata:
+        name: redhat-operators
+      spec:
+        image:  192-168-37-122.sslip.io:5000/redhat/redhat-operator-index:v4.10
+        sourceType: grpc
+        displayName: Red Hat Operators
+    - fileName: DefaultCatsrc.yaml
+      policyName: "disconnected-olm"
+      metadata:
+        name: certified-operators
+      spec:
+        image: 192-168-37-122.sslip.io:5000/redhat/certified-operator-index:v4.10
+        sourceType: grpc
+        displayName: Certified Operators
+#    - fileName: DefaultCatsrc.yaml
+#      policyName: "disconnected-olm"
+#      metadata:
+#        name: community-operators
+#      spec:
+#        image: 192-168-37-122.sslip.io:5000/redhat/community-operator-index:v4.10
+#        sourceType: grpc
+#        displayName: Community Operators
+        # PAO
+    - fileName: PaoSubscription.yaml
+      policyName: "pao-sub-policy"
+      spec:
+        source: redhat-operators
+        channel: "4.10"
+    - fileName: PaoSubscriptionNS.yaml
+      policyName: "pao-sub-policy"
+    - fileName: PaoSubscriptionOperGroup.yaml
+      policyName: "pao-sub-policy"
+    # SRIOV
+    - fileName: SriovSubscription.yaml
+      policyName: "subscriptions-policy"
+      spec:
+        channel: "4.10"
+    - fileName: SriovSubscriptionNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: SriovSubscriptionOperGroup.yaml
+      policyName: "subscriptions-policy"
+    #PTP
+    - fileName: PtpSubscription.yaml
+      policyName: "subscriptions-policy"
+    #  spec:
+    #    channel: "4.10"
+    - fileName: PtpSubscriptionNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: PtpSubscriptionOperGroup.yaml
+      policyName: "subscriptions-policy"
+    #CLO
+    - fileName: ClusterLogSubscription.yaml
+      policyName: "subscriptions-policy"
+    - fileName: ClusterLogNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: ClusterLogOperGroup.yaml
+      policyName: "subscriptions-policy"
+    #LSO
+    - fileName: StorageNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: StorageOperGroup.yaml
+      policyName: "subscriptions-policy"
+    - fileName: StorageSubscription.yaml
+      policyName: "subscriptions-policy"
+      spec:
+        channel: "4.10"
+    # Reduce monitoring operator footprint
+#    - fileName: ReduceMonitoringFootprint.yaml
+#      policyName: "config-policy"
+
+
+

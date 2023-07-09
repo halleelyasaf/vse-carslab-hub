@@ -1,0 +1,51 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "group-du-sno"
+  namespace: "ztp-group-du-policies"
+spec:
+  bindingRules:
+    group-du-sno: ""
+  mcp: "master"
+  remediationAction: enforce
+  sourceFiles:
+    - fileName: ConsoleOperatorDisable.yaml
+      policyName: "config-policy"
+      spec:
+        managementState: Managed
+    - fileName: DisableSnoNetworkDiag.yaml
+      policyName: "config-policy"
+    - fileName: SriovOperatorConfig.yaml
+      policyName: "config-policy"
+      spec:
+        disableDrain: true
+    - fileName: ClusterLogForwarder.yaml
+      policyName: "logging-policy"
+      spec:
+        outputs:
+          - type: "kafka"
+            name: kafka-open
+            # below URL is an example
+            url: tcp://192.168.37.10:9092/test
+        pipelines:
+          - name: audit-logs
+            inputRefs:
+              - audit
+            outputRefs:
+              - kafka-open
+          - name: infrastructure-logs
+            inputRefs:
+              - infrasstructure
+            outputRefs:
+              - kafka-open
+    - fileName: ClusterLogging.yaml
+      policyName: "logging-policy"
+      spec:
+        curation:
+          curator:
+            schedule: "30 3 * * *"
+        collection:
+          logs:
+            type: "fluentd"
+            fluentd: {}

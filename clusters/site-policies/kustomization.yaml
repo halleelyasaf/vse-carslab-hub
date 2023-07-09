@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+generators:
+ # - site-specific-policies/telco-showcase.yaml
+#  - common-policies/common-49.yaml
+  - common-policies/common-410.yaml
+  - group-policies/group-du-sno.yaml
+  - group-policies/group-5gcore-sno.yaml
+  - cluster-specific-policies/ts-sno-01.yaml
+  - cluster-specific-policies/ts-sno-02.yaml
+  - cluster-specific-policies/druid-5gcore-sno.yaml
+resources:
+# List of Namespace*.yaml required by the PolicyGenTemplate*.yaml
+  - ns.yaml
+

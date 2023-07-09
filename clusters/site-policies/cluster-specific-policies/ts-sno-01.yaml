@@ -1,0 +1,118 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "ap-du-01"
+  namespace: "ztp-ap-du-01-policies"
+spec:
+  bindingRules:
+    name: "ap-du-01"
+  mcp: "master"
+  remediationAction: inform
+  sourceFiles:
+    - fileName: SriovNetwork.yaml
+      policyName: "sriov-policy"
+      metadata:
+        name: "sriov-nw-du-vfio-ens2f0"
+      spec:
+        ipam: '{"type": "host-local", "ranges": [[{"subnet": "10.0.20.0/24"}]], "dataDir": "/run/my-orchestrator/container-ipam-state-1"}'
+        resourceName: E810-XXV-ens2f0
+        spoofChk: "off"
+        trust: "on"
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "sriov-policy"
+      remediationAction: inform
+      metadata:
+        name: "E810-XXV-ens2f0"
+      spec:
+        deviceType: vfio-pci
+        mtu: 1500
+        linkType: eth
+        isRdma: false
+        nicSelector:
+          pfNames: ["ens2f0"]
+        priority: 10
+        resourceName: E810-XXV-ens2f0
+        numVfs: 8
+
+    - fileName: PerformanceProfile.yaml
+      policyName: "pao-policy"
+      remediationAction: inform
+      metadata:
+        name: performance-sno
+        annotations:
+          kubeletconfig.experimental: |
+            {"topologyManagerScope": "pod",
+             "systemReserved": {"memory": "10.5Gi"}
+            }
+      spec:
+        additionalKernelArgs:
+          - "idle=poll"
+          - "rcupdate.rcu_normal_after_boot=0"
+          - "nohz_full=4-39,44-63"
+          - "crashkernel=1024M"
+        globallyDisableIrqLoadBalancing: false
+        cpu:
+          isolated: "4-11,16-47"
+          reserved: "0-3,12-15"
+        hugepages:
+          defaultHugepagesSize: 1G
+          pages:
+            - count: 8
+              size: 1G
+              node: 0
+            - count: 0
+              size: 1G
+              node: 1
+        numa:
+          topologyPolicy: single-numa-node
+        realTimeKernel:
+          enabled: true
+    - fileName: AcceleratorsNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: AcceleratorsOperGroup.yaml
+      policyName: "subscription-policy"
+    - fileName: AcceleratorsSubscription.yaml
+      policyName: "subscription-policy"
+    - fileName: "SriovFecClusterConfig.yaml"
+      policyName: "fec-policy"
+      spec:
+        drainSkip: true
+        acceleratorSelector:
+          pciAddress: 0000:8a:00.0
+        physicalFunction:
+          bbDevConfig:
+            acc100:
+              pfMode: false
+              numVfBundles: 16
+              maxQueueSize: 1024
+              uplink4G:
+                numQueueGroups: 0
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+              downlink4G:
+                numQueueGroups: 0
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+              uplink5G:
+                numQueueGroups: 4
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+              downlink5G:
+                numQueueGroups: 4
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+    - fileName: PtpConfigSlave.yaml
+      policyName: "ptp-policy"
+      metadata:
+        name: "du-ptp-slave"
+      spec:
+        profile:
+          - name: "slave"
+            interface: "ens2f1"
+            ptp4lOpts: "-2 -s --summary_interval -4"
+            phc2sysOpts: "-a -r -n 24"
+
+
+
+

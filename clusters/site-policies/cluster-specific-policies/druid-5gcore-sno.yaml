@@ -1,0 +1,74 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "druid-5gcore"
+  namespace: "ztp-druid-5gcore-policies"
+spec:
+  bindingRules:
+    name: "druid-5gcore"
+  mcp: "master"
+  remediationAction: enforce
+  sourceFiles:
+#    - fileName: ReduceMonitoringFootprint.yaml
+#      data:
+#        config.yaml: |
+#          enableUserWorkload: true
+#          grafana:
+#            enabled: true
+#          alertmanagerMain:
+#            enabled: true
+    - fileName: SriovNetwork.yaml
+      policyName: "sriov-5gcore-nw-policy"
+      metadata:
+        name: "sriov-5gcore-nw"
+      spec:
+        resourceName: druid_cpup
+        spoofChk: "off"
+        trust: "on"
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "sriov-5gcore-policy"
+      remediationAction: enforce
+      metadata:
+        name: "sriov-5gcore"
+      spec:
+        deviceType: netdevice
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          pfNames: ["ens10f0"]
+        priority: 99
+        resourceName: druid_cpup
+        numVfs: 3   # N2,N3,and N6 on same interface
+    - fileName: PerformanceProfile.yaml
+      policyName: "pao-policy"
+      metadata:
+        name: performance-sno
+        annotations:
+          kubeletconfig.experimental: |
+            {"topologyManagerScope": "pod",
+             "systemReserved": {"memory": "10.5Gi"}
+            }
+      spec:
+#        additionalKernelArgs:
+#          - "idle=poll"
+#          - "rcupdate.rcu_normal_after_boot=0"
+#          - "nohz_full=4-39,44-79"
+#          - "crashkernel=1024M"
+        globallyDisableIrqLoadBalancing: false
+        cpu:
+          isolated: "4-27,31-55"
+          reserved: "0-3,28-30"
+        hugepages:
+          defaultHugepagesSize: 1G
+          pages:
+            - count: 28
+              size: 1G
+              node: 0
+            - count: 0
+              size: 1G
+              node: 1
+        numa:
+          topologyPolicy: best-effort
+        realTimeKernel:
+          enabled: true

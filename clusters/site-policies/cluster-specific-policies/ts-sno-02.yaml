@@ -1,0 +1,157 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "ap-du-02"
+  namespace: "ztp-ap-du-02-policies"
+spec:
+  bindingRules:
+    name: "ap-du-02"
+  mcp: "master"
+  remediationAction: enforce
+  sourceFiles:
+    - fileName: SriovNetwork.yaml
+      policyName: "sriov-ran-du-nw-policy"
+      metadata:
+        name: "sriov-ran-du-nw"
+      spec:
+        resourceName: airspan_cp
+        spoofChk: "off"
+        trust: "on"
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "sriov-ran-du-policy"
+      remediationAction: enforce
+      metadata:
+        name: "sriov-ran-du"
+      spec:
+        deviceType: netdevice
+        mtu: 1500
+        isRdma: false
+        nicSelector:
+          pfNames: ["ens10f0"]
+        priority: 99
+        resourceName: airspan_cp
+        numVfs: 2
+
+    - fileName: SriovNetwork.yaml
+      policyName: "sriov-ran-fh-nw-policy"
+      metadata:
+        name: "sriov-ran-fh-nw"
+      spec:
+        resourceName: airspan_fh
+        spoofChk: "off"
+        trust: "on"
+        vlan: 100
+
+    - fileName: SriovNetworkNodePolicy.yaml
+      policyName: "sriov-ran-fh-policy"
+      remediationAction: enforce
+      metadata:
+        name: "sriov-ran-fh"
+      spec:
+        deviceType: netdevice
+        mtu: 9000
+        isRdma: false
+        nicSelector:
+          pfNames: ["ens10f1"]
+        priority: 99
+        resourceName: airspan_fh
+        numVfs: 1
+    - fileName: PerformanceProfile.yaml
+      policyName: "pao-policy"
+      metadata:
+        name: performance-sno
+        annotations:
+          kubeletconfig.experimental: |
+            {"topologyManagerScope": "pod",
+             "systemReserved": {"memory": "10.5Gi"}
+            }
+      spec:
+#        additionalKernelArgs:
+#          - "idle=poll"
+#          - "rcupdate.rcu_normal_after_boot=0"
+#          - "nohz_full=4-39,44-79"
+#          - "crashkernel=1024M"
+        globallyDisableIrqLoadBalancing: false
+        cpu:
+          isolated: "4-27,31-55"
+          reserved: "0-3,28-30"
+        hugepages:
+          defaultHugepagesSize: 1G
+          pages:
+            - count: 28
+              size: 1G
+              node: 0
+        numa:
+          topologyPolicy: best-effort
+        realTimeKernel:
+          enabled: true
+    - fileName: AcceleratorsNS.yaml
+      policyName: "subscriptions-policy"
+    - fileName: AcceleratorsOperGroup.yaml
+      policyName: "subscription-policy"
+    - fileName: AcceleratorsSubscription.yaml
+      policyName: "subscription-policy"
+    - fileName: "SriovFecClusterConfig.yaml"
+      policyName: "fec-policy"
+      spec:
+        drainSkip: true
+        acceleratorSelector:
+          pciAddress: 0000:2b:00.0
+        physicalFunction:
+          bbDevConfig:
+            acc100:
+              pfMode: false
+              numVfBundles: 16
+              maxQueueSize: 1024
+              uplink4G:
+                numQueueGroups: 0
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+              downlink4G:
+                numQueueGroups: 0
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+              uplink5G:
+                numQueueGroups: 4
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+              downlink5G:
+                numQueueGroups: 4
+                numAqsPerGroups: 16
+                aqDepthLog2: 4
+    - fileName: PtpConfigSlave.yaml
+      policyName: "ptp-policy"
+      metadata:
+        name: "du-ptp-slave"
+      spec:
+        profile:
+          - interface: ens1f1
+            name: profile1
+            phc2sysOpts: '-a -r -n 24'
+            ptp4lConf: |
+              [global]
+              slaveOnly 1
+              #twoStepFlag 1
+              domainNumber 24
+              first_step_threshold 0.01
+              step_threshold 0.000005
+              dataset_comparison G.8275.x
+              G.8275.defaultDS.localPriority 128
+              network_transport L2
+              tx_timestamp_timeout 30
+              time_stamping hardware
+              logSyncInterval -4
+              logAnnounceInterval -3
+              announceReceiptTimeout 3
+              logMinDelayReqInterval -4
+            ptp4lOpts: '-H -m'
+        recommend:
+          -  match:
+               - nodeLabel: node-role.kubernetes.io/master
+             priority: 1
+             profile: profile1
+
+
+
+
