@@ -1,0 +1,8 @@
+---
+apiVersion: hive.openshift.io/v1
+kind: ClusterImageSet
+metadata:
+  name: openshift-v4.10-disconnected
+  namespace: multicluster-engine
+spec:
+  releaseImage: quay-registry-quay-openshift-quay.apps.mano-307.ebc5.bos2.lab/openshift/release-images:4.10.24-x86_64

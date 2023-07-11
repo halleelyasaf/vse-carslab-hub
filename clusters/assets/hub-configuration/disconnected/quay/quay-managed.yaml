@@ -1,0 +1,10 @@
+apiVersion: quay.redhat.com/v1
+kind: QuayRegistry
+metadata:
+  name: quay-registry
+  namespace: openshift-quay
+spec:
+  configBundleSecret: config-bundle-secret
+  components:
+    - kind: tls
+      managed: false

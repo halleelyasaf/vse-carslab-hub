@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  gitlab.consulting.redhat.com: |-
+        -----BEGIN CERTIFICATE-----                                                                                                                                                         
+        MIIGDDCCBPSgAwIBAgISBPFNlTVD9blWyatnnkeie/9KMA0GCSqGSIb3DQEBCwUA
+        MDIxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQD
+        EwJSMzAeFw0yMzAyMDEwNDMwNTNaFw0yMzA1MDIwNDMwNTJaMCUxIzAhBgNVBAMT
+        GmFwcHMuY29uc3VsdGluZy5yZWRoYXQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOC
+        AQ8AMIIBCgKCAQEAx0N+Q+/ZAFV2foE8TTBEcfif84k1JgFGMU5jbZj1TnQgk/VX
+        Z4dp6zmsqX8k3ee9vMRZH12RO8xLplkC9GIWSMQ6eNygpD3UR+sK2jfMG91sOQ4Q
+        BtUmnpDEUqY3d/lRCvx7k/QAJzakbewRUi+GIpl8d4wfWEWSX7LNk+Ajm7d1s2Ee
+        lCxXAB2RNJpGaKjNCxRZJ8HRUec6ju7KGzRwdX/AEtxNB4V7RZ4xJLu7A+W7brJU
+        2v7Ukwo7j2/cY7vQNiX2aEzkNQuRsEBq62TbghP7WNyqp9lEsdoHaerVKrtrV1cW
+        6SSiN3Q61VPIXvlEQ5sQNSbtI8CJF+HZs2ZX6QIDAQABo4IDJzCCAyMwDgYDVR0P
+        AQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAMBgNVHRMB
+        Af8EAjAAMB0GA1UdDgQWBBQoXvaCWuFA5NrdzYEC8WPDxeRBlTAfBgNVHSMEGDAW
+        gBQULrMXt1hWy65QCUDmH6+dixTCxjBVBggrBgEFBQcBAQRJMEcwIQYIKwYBBQUH
+        MAGGFWh0dHA6Ly9yMy5vLmxlbmNyLm9yZzAiBggrBgEFBQcwAoYWaHR0cDovL3Iz
+        LmkubGVuY3Iub3JnLzCB9gYDVR0RBIHuMIHrghkzNjAuY29uc3VsdGluZy5yZWRo
+        YXQuY29tghkzNjIuY29uc3VsdGluZy5yZWRoYXQuY29tghxhcHBkZXYuY29uc3Vs
+        dGluZy5yZWRoYXQuY29tghphcHBzLmNvbnN1bHRpbmcucmVkaGF0LmNvbYIdZGV2
+        LjM2MC5jb25zdWx0aW5nLnJlZGhhdC5jb22CHGdpdGxhYi5jb25zdWx0aW5nLnJl
+        ZGhhdC5jb22CHXVhdC4zNjAuY29uc3VsdGluZy5yZWRoYXQuY29tgh11YXQuMzYy
+        LmNvbnN1bHRpbmcucmVkaGF0LmNvbTBMBgNVHSAERTBDMAgGBmeBDAECATA3Bgsr
+        BgEEAYLfEwEBATAoMCYGCCsGAQUFBwIBFhpodHRwOi8vY3BzLmxldHNlbmNyeXB0
+        Lm9yZzCCAQQGCisGAQQB1nkCBAIEgfUEgfIA8AB2AHoyjFTYty22IOo44FIe6YQW
+        cDIThU070ivBOlejUutSAAABhgt02/YAAAQDAEcwRQIgIPNo5CLyOE93aLBsHeJq
+        DcuP9+blp4P09KB7SFI1gyUCIQDoYQeM5xlg/Z1Q3eqfqQKxhhNwwo0KrwDMvhnw
+        vpVCeQB2AOg+0No+9QY1MudXKLyJa8kD08vREWvs62nhd31tBr1uAAABhgt03FgA
+        AAQDAEcwRQIhAJzaX/4jvdHmgS29QNP06WOaeb4OWn+T2doSCO3VZDVGAiAIasdq
+        9c1Y5aaH56SQxVxitBik0GX+ktlsk+JRnRfIETANBgkqhkiG9w0BAQsFAAOCAQEA
+        lUCo5TTaRvmAxRvNN64r5tmiKIKKraCJpSY2FgkzSzBBUx2W4+TX3x3m63ZIDQPs
+        wS12C3R1ATfwhWjJCRowsVDrtuSjC50AZGkp7+KufKCs7aQYs20d7cmj0tDiJBHy
+        IZARYaDv8ZWpBsvu5ZaqZHiae0v+JjOxn2npiBE8hbANBbn+ftguoKpTBk9Hmv1c
+        U5iPD2/FMZiJnCIcAIZhbHzjST4ZmxdBxMB2hPiMUDQjEoVy6CPoS9OxHgO5vJbf
+        y26icd9idPl0QRjgs6u5U55C+IPGMf3ErlnTuhvYnyyWwKCSW1ot5ZnJ/f7lGNxW
+        OryYmRAgg9mJLuyfVEbpVA==
+        -----END CERTIFICATE-----
+metadata:
+  name: argocd-tls-certs-cm
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/managed-by: openshift-gitops
+    app.kubernetes.io/name: argocd-tls-certs-cm
+    app.kubernetes.io/part-of: argocd
+

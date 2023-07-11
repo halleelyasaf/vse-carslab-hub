@@ -1,0 +1,138 @@
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: core-master-0
+  namespace: core-cluster
+  labels:
+    infraenvs.agent-install.openshift.io: "core-cluster"
+  annotations:
+    inspect.metal3.io: disabled
+    bmac.agent-install.openshift.io/hostname: "ocp-master-0"
+    bmac.agent-install.openshift.io/role: "master"
+spec:
+  online: true
+  bootMACAddress: b4:96:91:b7:27:3c
+  bootMode: "legacy"
+  automatedCleaningMode: disabled
+  rootDeviceHints:
+    deviceName: /dev/sda
+  bmc:
+    address: ilo5-virtualmedia://192.168.36.153/redfish/v1/Systems/1
+    credentialsName: core-master-0
+    disableCertificateVerification: true
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: core-master-1
+  namespace: core-cluster
+  labels:
+    infraenvs.agent-install.openshift.io: "core-cluster"
+  annotations:
+    inspect.metal3.io: disabled
+    bmac.agent-install.openshift.io/hostname: "ocp-master-1"
+    bmac.agent-install.openshift.io/role: "master"
+spec:
+  online: true
+  bootMACAddress: b4:96:91:ac:49:b0
+  bootMode: "legacy"
+  automatedCleaningMode: disabled
+  rootDeviceHints:
+    deviceName: /dev/sda
+  bmc:
+    address: ilo5-virtualmedia://192.168.36.154/redfish/v1/Systems/1
+    credentialsName: core-master-1
+    disableCertificateVerification: true
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: core-master-2
+  namespace: core-cluster
+  labels:
+    infraenvs.agent-install.openshift.io: "core-cluster"
+  annotations:
+    inspect.metal3.io: disabled
+    bmac.agent-install.openshift.io/hostname: "ocp-master-2"
+    bmac.agent-install.openshift.io/role: "master"
+spec:
+  online: true
+  bootMACAddress: b4:96:91:b7:29:dc
+  bootMode: "legacy"
+  automatedCleaningMode: disabled
+  rootDeviceHints:
+    deviceName: /dev/sda
+  bmc:
+    address: ilo5-virtualmedia://192.168.36.155/redfish/v1/Systems/1
+    credentialsName: core-master-2
+    disableCertificateVerification: true
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: core-worker-0
+  namespace: core-cluster
+  labels:
+    infraenvs.agent-install.openshift.io: "core-cluster"
+  annotations:
+    inspect.metal3.io: disabled
+    bmac.agent-install.openshift.io/hostname: "ocp-worker-0"
+    bmac.agent-install.openshift.io/role: "worker"
+spec:
+  online: true
+  bootMACAddress: b4:96:91:b7:28:ec
+  bootMode: "legacy"
+  automatedCleaningMode: disabled
+  rootDeviceHints:
+    deviceName: /dev/sda
+  bmc:
+    address: ilo5-virtualmedia://192.168.36.158/redfish/v1/Systems/1
+    credentialsName: core-worker-0
+    disableCertificateVerification: true
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: core-worker-1
+  namespace: core-cluster
+  labels:
+    infraenvs.agent-install.openshift.io: "core-cluster"
+  annotations:
+    inspect.metal3.io: disabled
+    bmac.agent-install.openshift.io/hostname: "ocp-worker-1"
+    bmac.agent-install.openshift.io/role: "worker"
+spec:
+  online: true
+  bootMACAddress: b4:96:91:b7:28:dc
+  bootMode: "legacy"
+  automatedCleaningMode: disabled
+  rootDeviceHints:
+    deviceName: /dev/sda
+  bmc:
+    address: ilo5-virtualmedia://192.168.36.159/redfish/v1/Systems/1
+    credentialsName: core-worker-1
+    disableCertificateVerification: true
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: core-worker-2
+  namespace: core-cluster
+  labels:
+    infraenvs.agent-install.openshift.io: "core-cluster"
+  annotations:
+    inspect.metal3.io: disabled
+    bmac.agent-install.openshift.io/hostname: "ocp-worker-2"
+    bmac.agent-install.openshift.io/role: "worker"
+spec:
+  online: true
+  bootMACAddress: b4:96:91:b7:27:a0
+  bootMode: "legacy"
+  automatedCleaningMode: disabled
+  rootDeviceHints:
+    deviceName: /dev/sda
+  bmc:
+    address: ilo5-virtualmedia://192.168.36.160/redfish/v1/Systems/1
+    credentialsName: core-worker-2
+    disableCertificateVerification: true

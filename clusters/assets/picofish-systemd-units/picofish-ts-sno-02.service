@@ -1,0 +1,19 @@
+[Unit]
+Description=Podman picofish for ts-sno-02
+
+[Service]
+Restart=on-failure
+ExecStartPre=/usr/bin/rm -f /%t/%n-pid /%t/%n-cid
+ExecStart=/usr/bin/podman run --conmon-pidfile /%t/%n-pid --cidfile /%t/%n-cid \
+		-d -p 9010:9000 --replace \
+		--name ts-sno-02 \
+		-e HOST=10.19.110.10 -e USERNAME=ADMIN -e PASSWORD=ADMIN \
+		quay.io/rhsysdeseng/picofish:latest
+ExecStop=/usr/bin/podman stop -t 10 ts-sno-02
+ExecStopPost=/usr/bin/sh -c "/usr/bin/podman rm -f `cat /%t/%n-cid`"
+KillMode=none
+Type=forking
+PIDFile=/%t/%n-pid
+
+[Install]
+WantedBy=default.target

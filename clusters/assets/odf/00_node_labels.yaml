@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: ocp-master-0
+  labels:
+    cluster.ocs.openshift.io/openshift-storage: ""
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: ocp-master-1
+  labels:
+    cluster.ocs.openshift.io/openshift-storage: ""
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: ocp-master-2
+  labels:
+    cluster.ocs.openshift.io/openshift-storage: ""

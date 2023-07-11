@@ -1,0 +1,24 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: core-cluster
+  namespace: core-cluster
+spec:
+  baseDomain: ebc5.bos2.lab
+  clusterName: core-307
+  controlPlaneConfig:
+    servingCertificates: {}
+  installed: false
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    # aci == AgentClusterInstall
+    name: core-cluster
+    version: v1beta1
+  platform:
+    agentBareMetal: 
+      agentSelector:
+        matchLabels:
+          cluster-name: "core-cluster"
+  pullSecretRef:
+    name: assisted-deployment-pull-secret

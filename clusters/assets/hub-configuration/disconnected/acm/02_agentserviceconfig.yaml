@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assisted-service-config
+  namespace: multicluster-engine
+  labels:
+    app: assisted-service
+data:
+  PUBLIC_CONTAINER_REGISTRIES: "quay.io,registry.ci.openshift.org,registry.redhat.io"
+  # Remove https://coreos.slack.com/archives/C03M7PYGLQ0/p1659540630579239?thread_ts=1659351991.313139&cid=C03M7PYGLQ0
+  DISABLED_HOST_VALIDATIONS: sufficient-packet-loss-requirement-for-role
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: AgentServiceConfig
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    unsupported.agent-install.openshift.io/assisted-service-configmap: 'assisted-service-config'
+  name: agent
+  namespace: multicluster-engine
+spec:
+  databaseStorage:
+    storageClassName: ocs-storagecluster-ceph-rbd
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  mirrorRegistryRef:
+    name: custom-registries
+  filesystemStorage:
+    storageClassName: ocs-storagecluster-ceph-rbd
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 20Gi
+  osImages:
+  - cpuArchitecture: x86_64
+    openshiftVersion: "4.10"
+    rootFSUrl: http://infra.ebc6.bos2.lab:9000/rhcos-4.10.16-x86_64-live-rootfs.x86_64.img
+    url: http://infra.ebc6.bos2.lab:9000/rhcos-4.10.16-x86_64-live.x86_64.iso
+    version: 410.84.202205191234-0
+---
+apiVersion: metal3.io/v1alpha1
+kind: Provisioning
+metadata:
+  name: provisioning-configuration
+spec:
+  watchAllNamespaces: true

@@ -1,0 +1,102 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: du-cluster-policies
+  name: du-cluster-policies
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: du-cluster-placementrule
+  namespace: du-cluster-policies
+spec:
+  clusterSelector:
+    matchExpressions:
+    - key: name
+      operator: In
+      values:
+      - "ap-du-01"
+      - "ap-du-02"
+      - "ap-du-03"
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: du-cluster-placementbinding
+  namespace: du-cluster-policies
+placementRef:
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+  name: du-cluster-placementrule
+subjects:
+- apiGroup: policy.open-cluster-management.io
+  kind: Policy
+  name: operatorhub-policy
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  name: operatorhub-policy
+  namespace: du-cluster-policies
+spec:
+  disabled: false
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: operatorhub-policy-config
+      spec:
+        namespaceselector:
+          exclude:
+          - kube-*
+          include:
+          - '*'
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: config.openshift.io/v1
+            kind: OperatorHub
+            metadata:
+              name: cluster
+            spec:
+              disableAllDefaultSources: true
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: operators.coreos.com/v1alpha1
+            kind: CatalogSource
+            metadata:
+              name: redhat-operator-index
+              namespace: openshift-marketplace
+            spec:
+              displayName: Disconnected Red Hat Operators
+              icon:
+                base64data: ""
+                mediatype: ""
+              image: infra.ebc6.bos2.lab:8443/redhat/redhat-operator-index:v4.10
+              publisher: Red Hat
+              sourceType: grpc
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: operators.coreos.com/v1alpha1
+            kind: CatalogSource
+            metadata:
+              name: certified-operator-index
+              namespace: openshift-marketplace
+            spec:
+              displayName: Certified disconnected Red Hat Operators
+              icon:
+                base64data: ""
+                mediatype: ""
+              image: infra.ebc6.bos2.lab:8443/redhat/certified-operator-index:v4.10
+              publisher: Red Hat
+              sourceType: grpc
+        remediationAction: enforce
+        severity: low
+  remediationAction: enforce

@@ -1,0 +1,162 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-registries
+  namespace: multicluster-engine
+  labels:
+    app: assisted-service
+data:
+  ca-bundle.crt: |
+    -----BEGIN CERTIFICATE-----
+    MIIFPzCCAyegAwIBAgIUJIDqjNW47o+P39J+beKKeR9oqBYwDQYJKoZIhvcNAQEL
+    BQAwHjEcMBoGA1UEAwwTaW5mcmEuZWJjNi5ib3MyLmxhYjAgFw0yMjExMDIxODI0
+    NDZaGA8yMDUwMDMxOTE4MjQ0NlowHjEcMBoGA1UEAwwTaW5mcmEuZWJjNi5ib3My
+    LmxhYjCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOOT4n+Zd0UZm8VI
+    Kt1AZBo2JyH7C+Abq3BOV2OttP1dKShQOvnubApTFuUsGpnwenylEDnoPHqe5v+X
+    hG4nJZjdijHTKNf2DtuymChNSoQld96xErRz3JXRocXWCr1rosYw7S4IF+F/+GmL
+    grwQCVdbdfRzPO8CGKs/6Dx+0Gmc8DQIPF3Ho53KSpqbui8s6984yid9BCMXtELG
+    TKsloQggzvw5B2jW2bNAG/j3yWL/k7KRMDApeQ5kJokdQ6AohKeUiTPEQr098h7U
+    TkCD46snA2Hn++s0c3XORgqkhjaA5GXii0mjKwaP1YKwJ96/dMwQxlP+awoAHbzg
+    l2Yjdg7DHeMrrzX1/ZOe5SQvWrw4cdubq57l6Mz1tubmEfvNrjV7a7O7gF+pJhOE
+    Ebiawrs0RPh/IoGozqwJvCn/HcZW4OB5RfHusPvEbB4DzumUEcoH1iiMVxqQGfCf
+    oFa1Qe1BnW4YqJjmFtSFn2M/in3BG9XXwCyozeAS3dzfkGQJ3UPG1luZPV2hjQwU
+    UGVRh44O4kfiV+Ky7eEwmgkS0ISC9EXnkMmUxvo9klcwRCy6G0df9lkQyj1ybcFC
+    zYabsBwUWlzIYnU6npNBHOPrBHApM4axTxLLmvmiE7dBsGE/bxbx595B/ZtCdEcY
+    L+mhzg4qznoZNZP5i0Qm5Yjf0ncPAgMBAAGjczBxMB0GA1UdDgQWBBQu+vyobY1e
+    u7nPl0/mBMoo4EvBMzAfBgNVHSMEGDAWgBQu+vyobY1eu7nPl0/mBMoo4EvBMzAP
+    BgNVHRMBAf8EBTADAQH/MB4GA1UdEQQXMBWCE2luZnJhLmViYzYuYm9zMi5sYWIw
+    DQYJKoZIhvcNAQELBQADggIBAKJrN8Jl9tofbWGlwoC+aus7z6wHlFQs32/qq9P9
+    uqYZy5HJJOorN775rVxs3nqA54WfwddNkK0N3ScLH5OL4722qaPwTmQ7qS+hPRNx
+    /rs8UbD779w7Mmqki9GgfODa3xMp4fGDJKlltV6YkJ81ZDJtJWJQerXFnp1rciYj
+    nXjWogXF/P2QfwQMlK74DiKbKp1y2qXkQXgawplErAJSNdzs06iw0iCsBwneJXBz
+    OiICjqpMOxIEa4ArvTjWRIXU8JjPY5HVX7662OeWDZkGRGTJquGjtk7kVmisgYJF
+    OkKs7uCIgn/zv+WU/HEPB74cz2t9WktKVgpMNgomiBIFby1gZC5IEagjmiFtYq3N
+    6/Ud2NRkFObQ4rMHnlkJDp8csEh+rPz0pSZFmzioi8u3haBSBcZOA8ffginVdEKB
+    Jc6uUvVHuPjw2RBQlr/XnPTfRKc0DkS00Qh5IFwjIkIf52ZwqTKZSz51ev+ug8al
+    R7YJRm9xZCjVeu9Dsl+DuP8ebXtMt36wOa0uJAZf1nCfCKyPtPz/LeTSSyDr+XfY
+    7S8pL71ZNvoL8SkZt6m7MT+G99kXmtDncbwhFLpRE13/PtDCvmNj8mETJm7GJPRj
+    WSitM4ZoCSTITHCIs44m4h38UjQIFFf5O8oBnA4BoZC4u6/1SWLdmm5r54zovu4V
+    +SWg
+    -----END CERTIFICATE-----
+  registries.conf: |
+    unqualified-search-registries = ["registry.access.redhat.com", "docker.io"]
+
+    [[registry]]
+    prefix = ""
+    location = "registry.access.redhat.com/ubi8"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/ubi8"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/rhacm2"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/rhacm2"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/openshift4"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/openshift4"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/rhceph"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/rhceph"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/rhel8"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/rhel8"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/quay"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/quay"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.connect.redhat.com/intel"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/intel"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/openshift-logging"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/openshift-logging"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/multicluster-engine"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/multicluster-engine"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/odf4"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/odf4"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/openshift-gitops-1"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/openshift-gitops-1"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/redhat"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/redhat"
+
+    [[registry]]
+    prefix = ""
+    location = "registry.redhat.io/rh-sso-7"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/rh-sso-7"
+
+    [[registry]]
+    prefix = ""
+    location = "quay.io/openshift-release-dev/ocp-release"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/openshift/release-images"
+
+    [[registry]]
+    prefix = ""
+    location = "quay.io/openshift-release-dev/ocp-v4.0-art-dev"
+    mirror-by-digest-only = true
+
+    [[registry.mirror]]
+      location = "infra.ebc6.bos2.lab:8443/openshift/release"

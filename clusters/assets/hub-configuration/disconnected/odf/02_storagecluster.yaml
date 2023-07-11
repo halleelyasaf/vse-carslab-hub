@@ -1,0 +1,90 @@
+apiVersion: ocs.openshift.io/v1
+kind: StorageCluster
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    cluster.ocs.openshift.io/local-devices: "true"
+    uninstall.ocs.openshift.io/cleanup-policy: delete
+    uninstall.ocs.openshift.io/mode: graceful
+  name: ocs-storagecluster
+  namespace: openshift-storage
+spec:
+  arbiter: {}
+  encryption:
+    kms: {}
+  externalStorage: {}
+  flexibleScaling: true
+  managedResources:
+    cephBlockPools: {}
+    cephConfig: {}
+    cephDashboard: {}
+    cephFilesystems: {}
+    cephObjectStoreUsers: {}
+    cephObjectStores: {}
+  monDataDirHostPath: /var/lib/rook
+  nodeTopologies: {}
+  placement:
+    all:
+      tolerations:
+        - key: node.ocs.openshift.io/storage
+          effect: NoSchedule
+          operator: Equal
+          value: "true"
+    mds:
+      tolerations:
+        - key: node.ocs.openshift.io/storage
+          effect: NoSchedule
+          operator: Equal
+          value: "true"
+    noobaa-core:
+      tolerations:
+        - key: node.ocs.openshift.io/storage
+          effect: NoSchedule
+          operator: Equal
+          value: "true"
+    rgw:
+      tolerations:
+        - key: node.ocs.openshift.io/storage
+          effect: NoSchedule
+          operator: Equal
+          value: "true"
+  resources:
+    mds:
+      limits:
+        cpu: "3"
+        memory: 8Gi
+      requests:
+        cpu: "1"
+        memory: 8Gi
+    rgw:
+      limits:
+        cpu: "2"
+        memory: 4Gi
+      requests:
+        cpu: "1"
+        memory: 4Gi
+  storageDeviceSets:
+  - config: {}
+    count: 3
+    dataPVCTemplate:
+      metadata: {}
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: "1"
+        storageClassName: localblock
+        volumeMode: Block
+      status: {}
+    name: ocs-deviceset-localblock
+    placement: {}
+    preparePlacement: {}
+    replica: 1
+    resources:
+      limits:
+        cpu: "2"
+        memory: 5Gi
+      requests:
+        cpu: "1"
+        memory: 5Gi

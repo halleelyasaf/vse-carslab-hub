@@ -1,0 +1,20 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: core-cluster
+  namespace: core-cluster
+spec:
+  additionalNTPSources:
+    - infra.ebc5.bos2.lab
+  clusterRef:
+    name: core-cluster
+    namespace: core-cluster
+  sshAuthorizedKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC8dWyy6ecXekpGjqe+GXMKrEV8hx9iXS767Cb3rELeihaMwZ9ZqJ3tEkEyvPGdGew0Oqb4QjrEF+l54d49AK3Qb4mb/yOZG+vM4ohMoHSqU/uXjPZPrkiQBNjaS7xDv21MxtGlF7aPsGK4ZF9hT7tC/o7CnI7OXdU+12AeqT5Zq+RpYvAjutG2DCHC8z/m0rUxNz6Rds4miUnAsP+Wj/6E7cxsdYqtCZs7w4si4ObR/bD3xUP8k+N8XLb12aGsNLinlWpAnoELCIZKBVsXrUukhgC8cgPt6/FM4kXEnbOjvfmpHCgaYHkGCVmr4tXBP6udJJgXG4mWjGVmBbC98G3Y+trr1LlucJWfBrTWN2PWLexcxSKoGeE1yp9VnRHTikJoR8A2c+3wh3jrT4Fe+TKBAmdB5ibm9xX85zZfQtXaBC4orP82XmOMrvEWimdu4426VMY/gB5v4Bc4Jqo3XtmhIfB6C5EHFskdoYMW0lgK8J6N/ZtSFVrthEBpLRMtOjE= kni@infra.ebc5.bos2.lab'
+  agentLabelSelector:
+    matchLabels:
+      cluster-name: "core-cluster"
+  pullSecretRef:
+    name: assisted-deployment-pull-secret
+  nmStateConfigLabelSelector:
+    matchLabels:
+      cluster-name: core-cluster

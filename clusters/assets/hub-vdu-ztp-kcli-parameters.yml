@@ -1,0 +1,69 @@
+plan: ts-ztp
+version: stable
+tag: "4.10.24"
+provisioning_enable: false
+virtual_masters: false
+virtual_workers: false
+launch_steps: true
+deploy_openshift: true
+cluster: hub-ztp
+domain: ebc6.bos2.lab
+api_ip: 192.168.37.30
+ingress_ip: 192.168.37.31
+#baremetal_bootstrap_os_image: http://infra.ebc6.bos2.lab:9000/rhcos-410.84.202205191234-0-qemu.x86_64.qcow2.gz?sha256=b8c16f94141c797a388ce50cff98c7c899b29dff7c3777a617fe5f9991078e5a
+#baremetal_cluster_os_image: http://infra.ebc6.bos2.lab:9000/rhcos-410.84.202205191234-0-openstack.x86_64.qcow2.gz?sha256=cd224d5a5ddff1a71cd6cd2c2ae574d06b2790085f1ba0749b3f394fc67ed4c7
+bmc_user: admin
+bmc_password: "redhat123"
+baremetal_cidr: 192.168.37.0/25
+acm: true
+mce: true
+pullsecret: ~/openshift_pull.json
+installer_mac: aa:aa:aa:aa:03:04
+baremetal_bootstrap_mac: aa:aa:aa:aa:03:05
+schedulable_masters:  true
+disconnected_operators:
+- advanced-cluster-management
+- performance-addon-operator
+- ptp-operator
+- sriov-network-operator
+- openshift-gitops-operator
+- cluster-logging
+- elasticsearch-operator
+- local-storage-operator
+- odf-lvm-operator
+- ocs-operator
+- multicluster-engine
+- mcg-operator
+- quay-operator
+- topology-aware-lifecycle-manager
+disconnected_certified_operators:
+- sriov-fec
+disconnected: true
+#disconnected_url: infra.ebc6.bos2.lab:8443
+#disconnected_user: admin
+#disconnected_password: r3dh4t1!
+manifests_dir: manifests
+nfs: false
+disk_size: 100
+installer_disk_size: 200
+installer_numcpus: 16
+installer_memory: 16384
+installer_wait: true
+apps:
+- users
+- advanced-cluster-management
+- openshift-gitops-operator
+- local-storage-operator
+- ocs-operator
+- topology-aware-lifecycle-manager
+- quay-operator
+masters:
+- redfish_address: redfish-virtualmedia://192.168.37.151/redfish/v1/Systems/1
+  provisioning_mac: b4:96:91:b7:28:2c
+  disk: /dev/sda
+- redfish_address: redfish-virtualmedia://192.168.37.152/redfish/v1/Systems/1
+  provisioning_mac: b4:96:91:ac:48:74
+  disk: /dev/sda
+- redfish_address: redfish-virtualmedia://192.168.37.153/redfish/v1/Systems/1
+  provisioning_mac: b4:96:91:c7:f0:30
+  disk: /dev/sda

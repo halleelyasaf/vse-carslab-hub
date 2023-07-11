@@ -1,0 +1,23 @@
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: core-cluster
+  namespace: core-cluster
+spec:
+  applicationManager:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  clusterLabels:
+    name: core-cluster
+    cloud: Baremetal
+    vendor: HPE
+  clusterName: core-cluster
+  clusterNamespace: core-cluster
+  iamPolicyController:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+

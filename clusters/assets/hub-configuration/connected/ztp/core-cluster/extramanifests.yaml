@@ -1,0 +1,57 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: extra-manifests-core-cluster
+  namespace: core-cluster
+data:
+  99_master_chrony_configuration.yaml: |
+    apiVersion: machineconfiguration.openshift.io/v1
+    kind: MachineConfig
+    metadata:
+      labels:
+        machineconfiguration.openshift.io/role: master
+      name: 99-master-chrony-configuration
+    spec:
+      config:
+        ignition:
+          config: {}
+          security:
+            tls: {}
+          timeouts: {}
+          version: 3.1.0
+        networkd: {}
+        passwd: {}
+        storage:
+          files:
+          - contents:
+              source: data:text/plain;charset=utf-8;base64,c2VydmVyIDE5Mi4xNjguMzYuMTAgaWJ1cnN0CmRyaWZ0ZmlsZSAvdmFyL2xpYi9jaHJvbnkvZHJpZnQKbWFrZXN0ZXAgMS4wIDMKcnRjc3luYwpsb2dkaXIgL3Zhci9sb2cvY2hyb255Cgo=
+            mode: 420
+            overwrite: true
+            path: /etc/chrony.conf
+      osImageURL: ""
+  99_worker_chrony_configuration.yaml: |
+    apiVersion: machineconfiguration.openshift.io/v1
+    kind: MachineConfig
+    metadata:
+      labels:
+        machineconfiguration.openshift.io/role: worker
+      name: 99-worker-chrony-configuration
+    spec:
+      config:
+        ignition:
+          config: {}
+          security:
+            tls: {}
+          timeouts: {}
+          version: 3.1.0
+        networkd: {}
+        passwd: {}
+        storage:
+          files:
+          - contents:
+              source: data:text/plain;charset=utf-8;base64,c2VydmVyIDE5Mi4xNjguMzYuMTAgaWJ1cnN0CmRyaWZ0ZmlsZSAvdmFyL2xpYi9jaHJvbnkvZHJpZnQKbWFrZXN0ZXAgMS4wIDMKcnRjc3luYwpsb2dkaXIgL3Zhci9sb2cvY2hyb255Cgo=
+            mode: 420
+            overwrite: true
+            path: /etc/chrony.conf
+      osImageURL: ""
