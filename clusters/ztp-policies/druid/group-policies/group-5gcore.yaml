@@ -7,7 +7,7 @@ metadata:
 spec:
   bindingRules:
     druid: "true"
-  mcp: "worker1"
+  mcp: "worker"
   remediationAction: enforce
   sourceFiles:
     - fileName: SriovOperatorConfig.yaml
