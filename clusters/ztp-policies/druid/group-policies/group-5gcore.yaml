@@ -13,6 +13,8 @@ spec:
     - fileName: SriovOperatorConfig.yaml
       policyName: "config-policy"
       spec:
+        configDaemonNodeSelector:
+          node-role.kubernetes.io/worker: ""
         disableDrain: true
     - fileName: ClusterLogForwarder.yaml
       policyName: "logging-policy"
