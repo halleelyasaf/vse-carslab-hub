@@ -1,0 +1,45 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  name: "group-5gcore-sno"
+  namespace: "ztp-group-5gcore-policies"
+spec:
+  bindingRules:
+    druid: "true"
+  mcp: "worker1"
+  remediationAction: enforce
+  sourceFiles:
+    - fileName: SriovOperatorConfig.yaml
+      policyName: "config-policy"
+      spec:
+        disableDrain: true
+    - fileName: ClusterLogForwarder.yaml
+      policyName: "logging-policy"
+      spec:
+        outputs:
+          - type: "kafka"
+            name: kafka-open
+            # below URL is an example
+            url: tcp://192.168.37.10:9092/test
+        pipelines:
+          - name: audit-logs
+            inputRefs:
+              - audit
+            outputRefs:
+              - kafka-open
+          - name: infrastructure-logs
+            inputRefs:
+              - infrasstructure
+            outputRefs:
+              - kafka-open
+    - fileName: ClusterLogging.yaml
+      policyName: "logging-policy"
+      spec:
+        curation:
+          curator:
+            schedule: "30 3 * * *"
+        collection:
+          logs:
+            type: "fluentd"
+            fluentd: {}
