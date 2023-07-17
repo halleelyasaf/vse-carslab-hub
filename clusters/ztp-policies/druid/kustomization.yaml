@@ -26,6 +26,7 @@ generators:
 # yamllint disable-line rule:line-length
 # These are examples that should be replicated for every individual site:
  - site-specific-policies/druid-site-specific.yaml
+ - group-policies/group-5gcore.yaml
 #- example-multinode-site.yaml
 # These are cluster specific policies:
 # - cluster-specific-policies/druid-cluster-specific.yaml
