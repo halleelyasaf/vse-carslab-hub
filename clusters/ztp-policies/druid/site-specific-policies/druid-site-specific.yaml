@@ -64,10 +64,7 @@ spec:
           pages:
             - count: 28
               size: 1G
-              node: 1
-            - count: 1
-              size: 1G
-              node: 1
+              node: 0
         numa:
           topologyPolicy: best-effort
         realTimeKernel:
