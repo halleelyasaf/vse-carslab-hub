@@ -7,7 +7,7 @@ metadata:
 spec:
   bindingRules:
     druid: true
-  mcp: "worker1"
+  mcp: "worker1.5g-core-cluster.npss.jnpr.bos2.lab"
   remediationAction: enforce
   sourceFiles:
 #    - fileName: ReduceMonitoringFootprint.yaml
