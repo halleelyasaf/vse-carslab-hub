@@ -43,7 +43,7 @@ spec:
     - fileName: PerformanceProfile.yaml
       policyName: "pao-policy"
       metadata:
-        name: performance-sno
+        name: performance
         annotations:
           kubeletconfig.experimental: |
             {"topologyManagerScope": "pod",
